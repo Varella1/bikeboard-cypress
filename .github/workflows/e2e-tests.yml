@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  cypress-run:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,4 +22,12 @@ jobs:
         with:
           name: cypress-screenshots-chrome
           path: cypress/screenshots
+      
+      - name: Upload Videos
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-videos-chrome
+          path: cypress/videos
+
 
