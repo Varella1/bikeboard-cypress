@@ -7,7 +7,10 @@ on:
         description: 'Escolha o ambiente de sua preferencia (local, homolog, production)'
         required: true
         default: 'http://localhost:3000'
-
+      browser: 
+        description: 'Escolha o navegador de sua preferencia (electron, chrome, firefox, edge)'
+        required: true
+        default: 'chrome'
 
   
 jobs:
@@ -23,20 +26,20 @@ jobs:
           BASE_URL: ${{ github.event.inputs.base_url }}
         with:
           start: npm start
-          browser: chrome
+          browser: ${{ github.event.inputs.browser }}
 
       - name: Upload Screenshots
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cypress-screenshots-${{ github.event.inputs.base_url }}
+          name: cypress-screenshots-${{ github.event.inputs.browser }}
           path: cypress/screenshots
 
       - name: Upload Videos
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cypress-videos-${{ github.event.inputs.base_url }}
+          name: cypress-videos-${{ github.event.inputs.browser }}
           path: cypress/videos
 
 
